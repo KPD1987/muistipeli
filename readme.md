@@ -1,4 +1,4 @@
-# Muistipeli
+# Muistipelin korjattu versio, jossa on tehty kaikki tehtävän mukaiset ongelmien korjaukset
 
 Tässä repositoryssa on toteutettu yksinkertainen muistipeli JavaScriptillä. 
 
@@ -16,3 +16,15 @@ Koodi on organisoitu seuraaviin moduuleihin:
 - `game.js`: Pelin aloitus ja päälogiikka.
 - `board.js`: Pelilaudan luominen ja korttien käsittely.
 - `card.js`: Korttien luominen ja kääntäminen.
+
+
+# Ongelmat, jotka korjattu:
+
+Korttien kääntämisen logiikka: Jos pelaaja yrittää kääntää saman kortin kahdesti, se ei pitäisi laskea yritykseksi. Tällä hetkellä koodi ei tarkista tätä tilannetta.
+Korttien kääntämisen estäminen: Jos kaksi korttia on jo käännetty, pelaajan ei pitäisi pystyä kääntämään lisää kortteja ennen kuin nykyiset kortit on käännetty takaisin tai poistettu pelistä.
+Pelin uudelleenkäynnistys: Pelissä ei ole toiminnallisuutta, joka mahdollistaisi pelin uudelleenkäynnistyksen ilman sivun uudelleenlatausta.
+Korttien satunnainen järjestys: Korttien järjestys ei välttämättä ole tarpeeksi satunnainen, mikä voi tehdä pelistä ennakoitavan.
+Visuaaliset ja käytettävyysongelmat: Korttien ulkoasu ja pelilaudan asettelu eivät välttämättä ole optimaalisia kaikenkokoisilla näytöillä.
+Pelin lopetuksen logiikka: Pelin lopetuksen logiikka ei välttämättä toimi oikein kaikissa tilanteissa, esimerkiksi jos pelaaja kääntää viimeiset kaksi korttia nopeasti peräkkäin.
+
+Ylläolevista ongelmista on myös tehty erilliset "Issues" merkinnät ja ne on myös muutosten tekemisen jälkeen siirretty "Done" kohtaan.
