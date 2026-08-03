@@ -1,14 +1,55 @@
 <!DOCTYPE html>
+<!--
+# MUUTOKSET JA LISÄYKSET
+- Lisätty korttimäärän valinta ja Aloita uusi peli -painike.
+- Lisätty yritysten, löydettyjen parien ja pelitilanteen näyttö.
+- Pelialue on koottu responsiiviseen ja saavutettavaan rakenteeseen.
+-->
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Responsiivinen hedelmäaiheinen muistipeli.">
     <title>Muistipeli</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Muistipeli</h1>
-    <div id="game-board"></div>
+    <main class="game-shell">
+        <header class="game-header">
+            <p class="game-header__eyebrow">Hedelmäjahti</p>
+            <h1>Muistipeli</h1>
+            <p>Käännä kaksi korttia kerrallaan ja löydä kaikki parit.</p>
+        </header>
+
+        <section class="game-panel" aria-label="Muistipeli">
+            <div class="game-controls">
+                <label for="card-count">Korttien määrä</label>
+                <select id="card-count" name="card-count">
+                    <option value="8">8 korttia</option>
+                    <option value="12">12 korttia</option>
+                    <option value="16" selected>16 korttia</option>
+                    <option value="20">20 korttia</option>
+                    <option value="24">24 korttia</option>
+                    <option value="32">32 korttia</option>
+                </select>
+                <button id="new-game-button" class="new-game-button" type="button">
+                    Aloita uusi peli
+                </button>
+            </div>
+
+            <div class="game-info" aria-label="Pelin tilanne">
+                <p>Yritykset <strong id="attempt-count">0</strong></p>
+                <p>Parit <strong id="pair-count">0 / 8</strong></p>
+            </div>
+
+            <p id="game-status" class="game-status" aria-live="polite">
+                Peli käynnissä – valitse ensimmäinen kortti.
+            </p>
+
+            <div id="game-board" class="game-board columns-4" aria-label="Muistipelin kortit"></div>
+        </section>
+    </main>
+
     <script type="module" src="./js/game.js"></script>
 </body>
 </html>
