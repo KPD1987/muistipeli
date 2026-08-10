@@ -2,7 +2,7 @@
 
 Tehtäväsi on korjata pelissä olevia ongelmia ja parantaa sitä lisäämällä uusia ominaisuuksia. Tee jokaisesta ongelmasta tai parannusehdotuksesta oma Issue, jotta voit seurata edistymistäsi. Voit myös tehdä muita parannuksia, joita ei ole listattu tässä.
 
-## Ongelmat
+## Ongelmat, nämä on jo KORJATTU
 
 1. **Korttien kääntämisen estäminen**: Jos kaksi korttia on jo käännetty, pelaajan ei pitäisi pystyä kääntämään lisää kortteja ennen kuin nykyiset kortit on käännetty takaisin tai poistettu pelistä.
 
@@ -15,7 +15,7 @@ Tehtäväsi on korjata pelissä olevia ongelmia ja parantaa sitä lisäämällä
 5. **Pelin lopetuksen logiikka**: Pelin lopetuksen logiikka ei välttämättä toimi oikein kaikissa tilanteissa, esimerkiksi jos pelaaja kääntää viimeiset kaksi korttia nopeasti peräkkäin.
 
 
-## Parannusehdotukset
+## Parannusehdotukset, joista osa vielä tekemättä
 
 Opiskelijat voivat tehdä seuraavia parannuksia peliin:
 
