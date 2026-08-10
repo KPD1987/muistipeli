@@ -29,15 +29,19 @@ Koodi on organisoitu seuraaviin moduuleihin:
 
 - Ylläolevista ongelmista on myös tehty erilliset "Issues" merkinnät ja ne on myös muutosten tekemisen jälkeen siirretty "Done" kohtaan.
 
-# Parannusehdotuksia, joita EI ole vielä tehty, löytyvät myöskin "Issues" tabin alta korvamerkittyinä:
+#Parannusehdotukset, jotka tehty
 
 - Tee tyylikkäämpi tapa valita pelin korttien määrä: Nyt pelin korttien määrä annetaan promptilla, mutta voit tehdä siihen esimerkiksi valikkovalinnan.
 - Pelin lopetus ja tulosten näyttäminen: Lisää toiminnallisuus, joka ilmoittaa pelaajalle, kun kaikki parit on löydetty, ja näyttää kuinka monta yritystä siihen kului.
 - Aikaseuranta: Lisää ajastin, joka seuraa kuinka kauan pelaajalta kestää löytää kaikki parit.
-- Pisteytysjärjestelmä: Lisää pisteytysjärjestelmä, joka perustuu esimerkiksi yritysten määrään ja käytettyyn aikaan.
 - Korttien kuvien lisääminen: Käytä oikeita kuvia korttien symboleina sen sijaan, että käytetään emoji-symboleja.
 - Responsiivisuus: Tee pelistä responsiivinen, jotta se toimii hyvin eri kokoisilla näytöillä.
 - Ääniefektit: Lisää ääniefektejä, kun kortteja käännetään ja pareja löydetään.
 - Teeman vaihtaminen: Lisää mahdollisuus vaihtaa pelin teemaa (esim. eri korttikuvat ja taustavärit).
+
+
+# Parannusehdotuksia, joita EI ole vielä tehty, löytyvät myöskin "Issues" tabin alta korvamerkittyinä:
+
+- Pisteytysjärjestelmä: Lisää pisteytysjärjestelmä, joka perustuu esimerkiksi yritysten määrään ja käytettyyn aikaan.
 
 # Alkuperäiset tehtävän tiedostot löytyvät "Main" branchin alta vielä toistaiseksi.
