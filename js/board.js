@@ -1,7 +1,9 @@
 // # MUUTOKSET JA LISÄYKSET
 // - Sama kortti ohitetaan, joten sen kaksoisklikkaus ei kasvata yritysmäärää.
 // - Pelilauta lukitaan heti toisen eri kortin jälkeen, kunnes vuoro on ratkaistu.
-// - Kortit ja pelissä käytettävät symbolit sekoitetaan Fisher–Yates-algoritmilla.
+// - Kortit ja symbolit sekoitetaan Fisher–Yates-algoritmilla.
+// - Valittavissa ovat hedelmä-, eläin- ja avaruusaiheiset korttikuvat.
+// - Pelilauta ilmoittaa ensimmäisestä käännöstä, jokaisesta käännöstä, parista ja voitosta.
 // - Uusi peli tyhjentää laudan, ajastimet ja kaiken edellisen pelin tilan.
 // - Voitto tarkistetaan löydettyjen parien laskurista täsmälleen kerran.
 
@@ -12,10 +14,20 @@ import {
     markCardAsMatched
 } from './card.js';
 
-const allCards = [
-    '🍎', '🍐', '🍒', '🍉', '🍇', '🍓', '🍌', '🍍',
-    '🥝', '🥥', '🍑', '🍈', '🍋', '🍊', '🍏', '🍅'
-];
+const cardThemes = Object.freeze({
+    fruits: [
+        '🍎', '🍐', '🍒', '🍉', '🍇', '🍓', '🍌', '🍍',
+        '🥝', '🥥', '🍑', '🍈', '🍋', '🍊', '🍏', '🍅'
+    ],
+    animals: [
+        '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼',
+        '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🦉'
+    ],
+    space: [
+        '🚀', '🛰️', '🌍', '🌕', '⭐', '☀️', '🪐', '☄️',
+        '👨‍🚀', '👽', '🛸', '🌌', '🔭', '🌠', '🌑', '🌟'
+    ]
+});
 
 const gameBoard = document.getElementById('game-board');
 const emptyCallback = () => {};
@@ -24,15 +36,26 @@ let firstCard = null;
 let secondCard = null;
 let lockBoard = false;
 let gameEnded = false;
+let gameHasStarted = false;
 let attempts = 0;
 let matchedPairs = 0;
 let totalPairs = 0;
 let turnTimer = null;
-let gameCallbacks = {
-    onAttempt: emptyCallback,
-    onMatch: emptyCallback,
-    onGameEnd: emptyCallback
-};
+let gameCallbacks = createEmptyCallbacks();
+
+function createEmptyCallbacks() {
+    return {
+        onGameStart: emptyCallback,
+        onCardFlip: emptyCallback,
+        onAttempt: emptyCallback,
+        onMatch: emptyCallback,
+        onGameEnd: emptyCallback
+    };
+}
+
+function safeCallback(callback) {
+    return typeof callback === 'function' ? callback : emptyCallback;
+}
 
 // Fisher–Yates antaa jokaiselle korttijärjestykselle saman mahdollisuuden.
 function shuffle(array) {
@@ -49,13 +72,25 @@ function shuffle(array) {
     return shuffledArray;
 }
 
-function validateCardCount(cardCount) {
+function getCardsForTheme(themeName) {
+    const selectedTheme = cardThemes[themeName];
+
+    if (!selectedTheme) {
+        throw new Error('Tuntematon korttiteema. Valitse hedelmät, eläimet tai avaruus.');
+    }
+
+    return selectedTheme;
+}
+
+function validateCardCount(cardCount, availableCards) {
     const isValidInteger = Number.isInteger(cardCount);
     const isEven = cardCount % 2 === 0;
-    const isWithinLimits = cardCount >= 2 && cardCount <= allCards.length * 2;
+    const isWithinLimits = cardCount >= 2 && cardCount <= availableCards.length * 2;
 
     if (!isValidInteger || !isEven || !isWithinLimits) {
-        throw new Error(`Korttien määrän täytyy olla parillinen luku väliltä 2–${allCards.length * 2}.`);
+        throw new Error(
+            `Korttien määrän täytyy olla parillinen luku väliltä 2–${availableCards.length * 2}.`
+        );
     }
 }
 
@@ -90,6 +125,7 @@ function resetGameState() {
     secondCard = null;
     lockBoard = false;
     gameEnded = false;
+    gameHasStarted = false;
     attempts = 0;
     matchedPairs = 0;
 }
@@ -142,6 +178,13 @@ function handleCardClick(cardElement) {
 
     if (clickIsBlocked || !flipCard(cardElement)) return;
 
+    if (!gameHasStarted) {
+        gameHasStarted = true;
+        gameCallbacks.onGameStart();
+    }
+
+    gameCallbacks.onCardFlip(cardElement.dataset.card);
+
     if (firstCard === null) {
         firstCard = cardElement;
         return;
@@ -154,21 +197,28 @@ function handleCardClick(cardElement) {
     checkForMatch();
 }
 
-export function createBoard(cardCount, callbacks = {}) {
-    validateCardCount(cardCount);
+export function createBoard(cardCount, options = {}) {
+    const themeName = options.cardTheme ?? 'fruits';
+    const availableCards = getCardsForTheme(themeName);
+
+    validateCardCount(cardCount, availableCards);
     resetGameState();
 
     totalPairs = cardCount / 2;
     gameCallbacks = {
-        onAttempt: callbacks.onAttempt ?? emptyCallback,
-        onMatch: callbacks.onMatch ?? emptyCallback,
-        onGameEnd: callbacks.onGameEnd ?? emptyCallback
+        onGameStart: safeCallback(options.onGameStart),
+        onCardFlip: safeCallback(options.onCardFlip),
+        onAttempt: safeCallback(options.onAttempt),
+        onMatch: safeCallback(options.onMatch),
+        onGameEnd: safeCallback(options.onGameEnd)
     };
 
-    const selectedCards = shuffle(allCards).slice(0, totalPairs);
+    const selectedCards = shuffle(availableCards).slice(0, totalPairs);
     const shuffledCards = shuffle([...selectedCards, ...selectedCards]);
 
     gameBoard.replaceChildren();
+    gameBoard.dataset.cardTheme = themeName;
+    gameBoard.setAttribute('aria-label', `Muistipelin kortit, teema: ${themeName}`);
     setBoardLayout(cardCount);
 
     shuffledCards.forEach((card, index) => {
