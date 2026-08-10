@@ -29,7 +29,7 @@ Koodi on organisoitu seuraaviin moduuleihin:
 
 - Ylläolevista ongelmista on myös tehty erilliset "Issues" merkinnät ja ne on myös muutosten tekemisen jälkeen siirretty "Done" kohtaan.
 
-#Parannusehdotukset, jotka tehty
+# Parannusehdotukset, jotka tehty
 
 - Tee tyylikkäämpi tapa valita pelin korttien määrä: Nyt pelin korttien määrä annetaan promptilla, mutta voit tehdä siihen esimerkiksi valikkovalinnan.
 - Pelin lopetus ja tulosten näyttäminen: Lisää toiminnallisuus, joka ilmoittaa pelaajalle, kun kaikki parit on löydetty, ja näyttää kuinka monta yritystä siihen kului.
