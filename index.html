@@ -1,49 +1,84 @@
 <!DOCTYPE html>
 <!--
 # MUUTOKSET JA LISÄYKSET
-- Lisätty korttimäärän valinta ja Aloita uusi peli -painike.
-- Lisätty yritysten, löydettyjen parien ja pelitilanteen näyttö.
-- Pelialue on koottu responsiiviseen ja saavutettavaan rakenteeseen.
+- Lisätty korttimäärän ja korttikuvateeman valinnat.
+- Lisätty tumma ja vaalea väriteema.
+- Lisätty peliajan näyttö sekä äänien päälle/pois-painike.
+- Aloita uusi peli -painike nollaa myös ajastimen.
 -->
 <html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Responsiivinen hedelmäaiheinen muistipeli.">
+    <meta name="description" content="Responsiivinen ja muokattava muistipeli.">
     <title>Muistipeli</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-color-theme="dark">
     <main class="game-shell">
         <header class="game-header">
-            <p class="game-header__eyebrow">Hedelmäjahti</p>
+            <p class="game-header__eyebrow">Hedelmäjahti ja paljon muuta</p>
             <h1>Muistipeli</h1>
             <p>Käännä kaksi korttia kerrallaan ja löydä kaikki parit.</p>
         </header>
 
         <section class="game-panel" aria-label="Muistipeli">
-            <div class="game-controls">
-                <label for="card-count">Korttien määrä</label>
-                <select id="card-count" name="card-count">
-                    <option value="8">8 korttia</option>
-                    <option value="12">12 korttia</option>
-                    <option value="16" selected>16 korttia</option>
-                    <option value="20">20 korttia</option>
-                    <option value="24">24 korttia</option>
-                    <option value="32">32 korttia</option>
-                </select>
+            <div class="game-controls" aria-label="Pelin asetukset">
+                <div class="control-group">
+                    <label for="card-count">Korttien määrä</label>
+                    <select id="card-count" name="card-count">
+                        <option value="8">8 korttia</option>
+                        <option value="12">12 korttia</option>
+                        <option value="16" selected>16 korttia</option>
+                        <option value="20">20 korttia</option>
+                        <option value="24">24 korttia</option>
+                        <option value="32">32 korttia</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="card-theme">Korttikuvat</label>
+                    <select id="card-theme" name="card-theme">
+                        <option value="fruits" selected>Hedelmät</option>
+                        <option value="animals">Eläimet</option>
+                        <option value="space">Avaruus</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="color-theme">Väriteema</label>
+                    <select id="color-theme" name="color-theme">
+                        <option value="dark" selected>Tumma</option>
+                        <option value="light">Vaalea</option>
+                    </select>
+                </div>
+
+                <button
+                    id="sound-toggle"
+                    class="secondary-button sound-toggle"
+                    type="button"
+                    aria-pressed="true"
+                >
+                    🔊 Äänet päällä
+                </button>
+
                 <button id="new-game-button" class="new-game-button" type="button">
                     Aloita uusi peli
                 </button>
             </div>
 
+            <p class="settings-hint">
+                Korttimäärä ja korttikuvat vaihtuvat uuden pelin alkaessa. Väriteema vaihtuu heti.
+            </p>
+
             <div class="game-info" aria-label="Pelin tilanne">
                 <p>Yritykset <strong id="attempt-count">0</strong></p>
                 <p>Parit <strong id="pair-count">0 / 8</strong></p>
+                <p>Aika <strong id="elapsed-time">00:00.0</strong></p>
             </div>
 
             <p id="game-status" class="game-status" aria-live="polite">
-                Peli käynnissä – valitse ensimmäinen kortti.
+                Peli valmiina – ajastin käynnistyy ensimmäisestä kortista.
             </p>
 
             <div id="game-board" class="game-board columns-4" aria-label="Muistipelin kortit"></div>
